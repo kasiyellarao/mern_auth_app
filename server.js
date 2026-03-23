@@ -8,20 +8,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Test route
 app.get("/", (req, res) => {
-  res.send("Backend is running");
-});
-
-app.get("/health", (req, res) => {
-  res.status(200).json({ ok: true });
+  res.send("Backend is running 🚀");
 });
 
 app.use("/api/auth", require("./routes/authRoutes"));
 
-const PORT = process.env.PORT || 5000;
+// 🔥 IMPORTANT CHANGE
+const PORT = process.env.PORT; // NO fallback
 
-mongoose
-  .connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB Connected");
 
@@ -30,6 +27,6 @@ mongoose
     });
   })
   .catch((err) => {
-    console.error("MongoDB connection failed:", err.message);
+    console.log("MongoDB Error:", err.message);
     process.exit(1);
   });
